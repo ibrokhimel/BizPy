@@ -1,0 +1,9 @@
+{
+  "name": "bizpy",
+  "private": true,
+  "description": "BizPy: interactive Python course for UDE4070CM Fundamentals of Business Programming",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "check": "python tests/check_content.py"
+  }
+}

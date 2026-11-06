@@ -1,0 +1,101 @@
+/* Animations & feedback */
+.fx-burst { position: fixed; z-index: 140; pointer-events: none; width: 0; height: 0; }
+.fx-burst i { position: absolute; left: 0; top: 0; border-radius: 50%; animation: fxBurst .7s cubic-bezier(.2,.8,.3,1) forwards; }
+@keyframes fxBurst { 0% { transform: translate(-50%,-50%) scale(1); opacity: 1; } 100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) + 30px)) scale(.3) rotate(180deg); opacity: 0; } }
+
+.fx-xp { position: fixed; z-index: 141; pointer-events: none; transform: translate(-50%,-50%); font-family: var(--font-display); font-weight: 800; font-size: 1.35rem;
+  color: #17191C; background: var(--yellow); padding: 4px 12px; border-radius: 99px; box-shadow: 0 6px 18px -4px rgb(0 0 0 / .35); white-space: nowrap; }
+
+.stat-chip.bump { animation: chipBump .55s cubic-bezier(.3,1.6,.5,1); }
+.stat-chip.bump .lvl { background: var(--yellow); color: #17191C; transition: background .3s; }
+@keyframes chipBump { 30% { transform: scale(1.18); box-shadow: 0 0 0 6px color-mix(in srgb, var(--yellow) 40%, transparent); } }
+.stat-chip .streak:not(.off) { display: inline-block; animation: flame 1.6s ease-in-out infinite; }
+@keyframes flame { 50% { transform: translateY(-1px) scale(1.12); } }
+
+.fx-shake { animation: fxShake .45s cubic-bezier(.36,.07,.19,.97); }
+@keyframes fxShake { 15%, 85% { transform: translateX(-2px); } 30%, 70% { transform: translateX(5px); } 45%, 55% { transform: translateX(-7px); } 50% { transform: translateX(7px); } }
+.fx-pop { animation: fxPop .5s cubic-bezier(.3,1.7,.5,1); }
+@keyframes fxPop { 40% { transform: scale(1.06); } }
+
+.fx-ripple { position: absolute; border-radius: 50%; background: currentColor; opacity: .18; transform: scale(0); pointer-events: none; animation: ripple .6s ease-out forwards; }
+@keyframes ripple { to { transform: scale(1); opacity: 0; } }
+
+/* Buttons feel physical */
+.btn { transition: transform .12s cubic-bezier(.3,1.6,.5,1), box-shadow .15s, background .15s, border-color .15s, color .15s; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 12px -6px rgb(0 0 0 / .35); }
+.btn:active:not(:disabled) { transform: translateY(1px) scale(.97); box-shadow: none; }
+.btn.go:not(:disabled), .ide-bar .btn.check { box-shadow: 0 3px 0 color-mix(in srgb, currentColor 0%, rgb(0 0 0 / .25)); }
+.btn.loading { pointer-events: none; opacity: .8; }
+.btn.loading::after { content: ""; width: 12px; height: 12px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Exercise feedback */
+.exercise { transition: border-color .3s, box-shadow .3s, transform .3s; }
+.exercise.just-passed { box-shadow: 0 0 0 4px color-mix(in srgb, var(--green) 30%, transparent); }
+.exercise.passed .ex-num { animation: numPop .6s cubic-bezier(.3,1.8,.5,1); }
+@keyframes numPop { 0% { transform: scale(.4) rotate(-90deg); } 60% { transform: scale(1.3) rotate(10deg); } }
+.ex-feedback.ok { animation: okIn .45s cubic-bezier(.3,1.5,.5,1); }
+@keyframes okIn { from { transform: translateY(-6px) scale(.96); opacity: 0; } }
+.ex-feedback.ok b::before { content: "🎉 "; }
+.ex-feedback.bad { animation: fxShake .45s; }
+
+/* Quiz */
+.quiz-opt { transition: transform .15s, border-color .15s, background .2s; }
+.quiz-opt:hover:not(:disabled) { transform: translateX(4px); }
+.quiz-opt.right { animation: fxPop .5s cubic-bezier(.3,1.7,.5,1); }
+.quiz-opt.right .key { animation: numPop .5s; }
+.quiz-opt.wrong { animation: fxShake .45s; }
+.quiz-why { animation: okIn .35s ease-out; }
+
+/* Lesson complete stamp */
+.complete-bar.done { animation: fxPop .6s cubic-bezier(.3,1.7,.5,1); }
+.complete-bar.done b::before { content: "✓"; display: inline-grid; place-items: center; width: 26px; height: 26px; margin-right: 8px; border-radius: 50%; background: var(--green); color: #fff; animation: numPop .6s; }
+.side-link.done .tick { animation: numPop .5s; }
+
+/* Cards hover */
+.r-card, .hub-row, .boss, .reward, .panel { transition: transform .18s cubic-bezier(.3,1.4,.5,1), border-color .15s, box-shadow .2s; }
+.reward:hover, .r-card:hover, .boss:hover { transform: translateY(-3px); box-shadow: 0 12px 26px -16px rgb(0 0 0 / .4); }
+.reward.can .btn.go { animation: canBuy 2.4s ease-in-out infinite; }
+@keyframes canBuy { 0%, 80%, 100% { transform: none; } 88% { transform: scale(1.08) rotate(-2deg); } 94% { transform: scale(1.04) rotate(2deg); } }
+
+/* Shop order popup */
+.order-done { text-align: center; }
+.order-img { position: relative; width: 170px; height: 170px; margin: 0 auto 10px; animation: orderIn .7s cubic-bezier(.3,1.6,.5,1); }
+.order-img img { width: 100%; height: 100%; border-radius: 22px; box-shadow: var(--shadow-2); }
+.order-check { position: absolute; right: -8px; bottom: -8px; width: 52px; height: 52px; border-radius: 50%; background: var(--green); color: #fff; font-size: 1.7rem; font-weight: 800;
+  display: grid; place-items: center; border: 4px solid var(--surface); animation: stamp .5s .45s cubic-bezier(.3,1.8,.5,1) both; }
+.order-done h3 { font-size: 1.3rem; margin: 12px 0 6px; }
+@keyframes orderIn { 0% { transform: scale(.3) rotate(-12deg); opacity: 0; } }
+@keyframes stamp { 0% { transform: scale(2.4); opacity: 0; } }
+
+/* Level-up overlay */
+.fx-level { position: fixed; inset: 0; z-index: 130; display: grid; place-items: center; background: rgb(10 12 15 / .55); animation: fade .25s; }
+.fx-level.out { animation: fade .3s reverse forwards; }
+.fx-level-card { position: relative; overflow: hidden; text-align: center; background: var(--ink); color: var(--bg); padding: 40px 54px 34px; border-radius: 24px; box-shadow: var(--shadow-2); animation: orderIn .7s cubic-bezier(.3,1.6,.5,1); }
+.fx-level-card .eyebrow { color: var(--yellow); letter-spacing: .3em; position: relative; }
+.fx-level-num { position: relative; font-family: var(--font-display); font-weight: 800; font-size: 7rem; line-height: 1; color: var(--yellow); text-shadow: 0 6px 0 rgb(0 0 0 / .25); animation: numPop .9s .15s cubic-bezier(.3,1.8,.5,1) both; }
+.fx-level-rank { position: relative; margin: 10px 0 22px; font-size: 1.15rem; }
+.fx-rays { position: absolute; inset: -50%; background: repeating-conic-gradient(from 0deg, color-mix(in srgb, var(--yellow) 14%, transparent) 0 10deg, transparent 10deg 20deg); animation: spin 14s linear infinite; }
+
+/* Console typing feel */
+.console .in { animation: okIn .2s; }
+.run-status.running::before, .run-status.waiting::before { background: var(--yellow); animation: pulse .8s infinite; }
+
+/* Flashcard */
+.fc:hover .fc-inner { transform: rotateY(4deg) rotateX(2deg); }
+.fc.flipped:hover .fc-inner { transform: rotateY(176deg) rotateX(2deg); }
+.fc.flipped .fc-inner { transform: rotateY(180deg); }
+
+/* Toasts slide + bounce */
+.toast { animation: toastIn .45s cubic-bezier(.3,1.5,.5,1); }
+
+@media (prefers-reduced-motion: reduce) { .reward.can .btn.go, .stat-chip .streak, .fx-rays { animation: none !important; } }
+
+/* Toggle switch */
+.switch { position: relative; width: 48px; height: 28px; flex: none; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch span { position: absolute; inset: 0; border-radius: 99px; background: var(--line-strong); transition: background .2s; cursor: pointer; }
+.switch span::after { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .3); transition: transform .25s cubic-bezier(.3,1.6,.5,1); }
+.switch input:checked + span { background: var(--green); }
+.switch input:checked + span::after { transform: translateX(20px); }
+.switch input:focus-visible + span { outline: 2px solid var(--blue); outline-offset: 2px; }
